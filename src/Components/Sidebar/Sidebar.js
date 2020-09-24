@@ -13,6 +13,7 @@ import AppsIcon from "@material-ui/icons/Apps";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import db from "../../firebase";
 
 function Sidebar() {
@@ -29,6 +30,16 @@ function Sidebar() {
       )
     );
   }, []);
+
+  const addChannel = () => {
+    const channelName = prompt("Enter the channel name ");
+
+    if (channelName) {
+      db.collection("rooms").add({
+        name: channelName,
+      });
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -53,7 +64,13 @@ function Sidebar() {
       <SidebarOption Icon={ExpandLessIcon} title="Show less" />
       <hr />
 
-      <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
+      <div className="channel_header">
+        <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
+        <div onClick={addChannel}>
+          <AddCircleOutlineIcon className="add_channel" />
+        </div>
+      </div>
+
       <hr />
       {channels.map((channel) => (
         <SidebarOption title={channel.name} id={channel.id} />
