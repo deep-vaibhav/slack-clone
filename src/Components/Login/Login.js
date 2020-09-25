@@ -3,8 +3,11 @@ import React from "react";
 import "./Login.scss";
 import { Button } from "@material-ui/core";
 import { auth, provider } from "../../firebase";
+import { useStateValue } from "../../StateProvider";
 
 function Login() {
+  const [state, dispatch] = useStateValue();
+
   const signIn = (e) => {
     e.preventDefault();
 
@@ -12,6 +15,11 @@ function Login() {
       .signInWithPopup(provider)
       .then((result) => {
         console.log(result);
+
+        dispatch({
+          type: "SET_USER",
+          user: result.user,
+        });
       })
       .catch((error) => {
         alert(error.message);
@@ -27,9 +35,9 @@ function Login() {
         />
         <h1>Sign in to your workspace</h1>
         <p>vabs.flack.com</p>
-        <Button className="signin_button" onClick={signIn}>
+        <button className="signin_button" onClick={signIn}>
           Sign in with Google
-        </Button>
+        </button>
       </div>
     </div>
   );

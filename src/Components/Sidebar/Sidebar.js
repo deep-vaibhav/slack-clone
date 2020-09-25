@@ -15,9 +15,11 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import db from "../../firebase";
+import { useStateValue } from "../../StateProvider";
 
 function Sidebar() {
   const [channels, setChannels] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
     //run this code ONCE when the sidebar loads
@@ -48,7 +50,7 @@ function Sidebar() {
           <h2>Vab's workspace</h2>
           <h3>
             <FiberManualRecordIcon className="dot" />
-            Vaibhav Deep
+            {user?.displayName}
           </h3>
         </div>
 
